@@ -31,7 +31,6 @@ in
       environment = {
         RUST_LOG="info,wasmer_compiler_cranelift=warn";
 	RUST_BACKTRACE = "1";
-        CONDUCTOR_ROOT = "/var/lib/conductor/";
       };
       
       preStart = ''
