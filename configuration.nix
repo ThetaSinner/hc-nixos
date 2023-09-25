@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running `nixos-help`).
 
-{ config, pkgs, ... }:
+{ config, pkgs, holochain, ... }:
 
 {
   imports =
@@ -50,7 +50,7 @@
   };
 
   # Set your time zone.
-  # time.timeZone = "Europe/Amsterdam";
+  time.timeZone = "Europe/London";
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -87,9 +87,9 @@
   users.users.thetasinner = {
     isNormalUser = true;
     home = "/home/thetasinner";
-    extraGroups = [ "wheel" "holochain" ]; # Enable ‘sudo’ for the user.
-    packages = with pkgs; [
-      caddy
+    extraGroups = [ 
+      "wheel" # Enable ‘sudo’ for the user.
+      "holochain" 
     ];
   };
 
@@ -108,7 +108,7 @@
   environment.systemPackages = with pkgs; [
     # vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     git
-    
+    holochain
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
