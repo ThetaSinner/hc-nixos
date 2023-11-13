@@ -40,7 +40,6 @@ in
       '';
 
       script = ''
-        holochain --version
         echo -n "${cfg.keystorePassphrase}" | holochain -c /var/lib/conductor/conductor.yaml --piped
       '';
 
