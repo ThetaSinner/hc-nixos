@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running `nixos-help`).
 
-{ config, pkgs, holochain, ... }:
+{ config, pkgs, holochain, lair-keystore, ... }:
 
 {
   imports =
@@ -47,6 +47,10 @@
   services.conductor = {
     enable = true;
     keystorePassphrase = "default-passphrase";
+  };
+
+  services.sysstat = {
+    enable = true;
   };
 
   # Set your time zone.
@@ -109,6 +113,12 @@
     # vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     git
     holochain
+    lair-keystore
+    htop
+    sysstat
+    helix
+    sqlite
+    sqlcipher
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
