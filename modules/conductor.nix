@@ -29,14 +29,15 @@ in
       restartIfChanged = true;
 
       environment = {
-        RUST_LOG="info,wasmer_compiler_cranelift=warn";
-	RUST_BACKTRACE = "1";
+        RUST_LOG="info,wasmer_compiler_cranelift=warn,holochain_sqlite=trace";
+        RUST_BACKTRACE = "1";
+        # HOLOCHAIN_MIGRATE_UNENCRYPTED="true";
       };
       
       preStart = ''
         # TODO should be able to pass this to Holochain as an arg rather than needing to modify the file
         lair_connection_url=$(yq -r .connectionUrl /var/lib/lair/lair-keystore-config.yaml)
-        yq -y "(.key_store.connection_url) = \"$lair_connection_url\"" /etc/holochain/conductor.yaml > /var/lib/conductor/conductor.yaml
+        yq -y "(.keystore.connection_url) = \"$lair_connection_url\"" /etc/holochain/conductor.yaml > /var/lib/conductor/conductor.yaml
       '';
 
       script = ''
@@ -55,7 +56,7 @@ in
       };
     };
 
-    environment.etc."holochain/conductor.yaml".source = (pkgs.formats.yaml {}).generate "conductor.yaml" {
+    environment.etc."holochain/conductor.yaml".source = (pkgs.formats.yaml {}).generate "conductor.yaml" ({
       environment_path = "/var/lib/conductor";
       db_sync_strategy = "Fast";
       admin_interfaces = [
@@ -75,7 +76,7 @@ in
         };
       };
     } // cfg.config // {
-      key_store.type = "lair_server";
-    };
+      keystore.type = "lair_server";
+    });
   };
 }

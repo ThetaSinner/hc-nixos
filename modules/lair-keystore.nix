@@ -23,6 +23,7 @@ in
 
       environment = {
         LAIR_ROOT = "/var/lib/lair/";
+        # LAIR_MIGRATE_UNENCRYPTED="true";
       };
    
       preStart = ''
@@ -48,7 +49,7 @@ in
       '';
 
       serviceConfig = {
-        User = "lair";
+        User = "conductor";
         Group = "holochain";
         StateDirectory = "lair";
         StateDirectoryMode = "0755";

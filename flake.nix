@@ -1,9 +1,9 @@
 {
   inputs = {
-    versions.url = "github:holochain/holochain?dir=versions/0_2";
+    versions.url = "github:holochain/holochain?dir=versions/0_2_rc";
     
-    versions.inputs.holochain.url = "github:holochain/holochain/holochain-0.2.3-rc.0";
-    versions.inputs.lair.url = "github:holochain/lair/lair_keystore-v0.3.0";
+    versions.inputs.holochain.url = "github:holochain/holochain/holochain-0.2.5-rc.1";
+    versions.inputs.lair.url = "github:holochain/lair/lair_keystore-v0.4.1";
 
     holochain = {
       url = "github:holochain/holochain";
