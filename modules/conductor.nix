@@ -57,10 +57,10 @@ in
     };
 
     environment.etc."holochain/conductor.yaml".source = (pkgs.formats.yaml {}).generate "conductor.yaml" ({
-      environment_path = "/var/lib/conductor";
+      data_root_path = "/var/lib/conductor";
       db_sync_strategy = "Fast";
       admin_interfaces = [
-        { driver = { type = "websocket"; port = 8000; }; }
+        { driver = { type = "websocket"; port = 8000; allowed_origins = "*"; }; }
       ];
       network = {
         network_type = "quic_bootstrap";
