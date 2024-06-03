@@ -32,7 +32,7 @@ in
         StateDirectory = "trycp";
         StateDirectoryMode = "0755";
         ExecStart = ''
-          ${trycp-server}/bin/trycp_server --port ${cfg.port}
+          ${trycp-server}/bin/trycp_server --port ${toString cfg.port}
         '';
       };
     };
