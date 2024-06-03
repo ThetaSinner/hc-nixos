@@ -3,20 +3,19 @@
 with lib;
 
 let
-  cfg = config.services.lair-keystore; # The input config for this service
+  # The input config for this service
+  cfg = config.services.lair-keystore;
 in
 {
   options.services.lair-keystore = {
     enable = mkEnableOption "Lair keystore";
 
-    passphrase = mkOption {
-      type = types.str;
-    };
+    passphrase = mkOption { type = types.str; };
   };
 
   config = mkIf cfg.enable {
     systemd.services.lair-keystore = {
-      wantedBy = ["multi-user.target"]; # Start on boot
+      wantedBy = [ "multi-user.target" ]; # Start on boot
       description = "Lair keystore";
       path = [ lair-keystore ];
       restartIfChanged = true;
@@ -25,7 +24,7 @@ in
         LAIR_ROOT = "/var/lib/lair/";
         # LAIR_MIGRATE_UNENCRYPTED="true";
       };
-   
+
       preStart = ''
         if test -f "''${LAIR_ROOT}lair-keystore-config.yaml"; then
           echo "Lair is already initialised, skipping init"

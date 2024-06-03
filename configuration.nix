@@ -5,12 +5,13 @@
 { config, pkgs, holochain, lair-keystore, trycp-server, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./modules/lair-keystore.nix
-      ./modules/conductor.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./modules/lair-keystore.nix
+    ./modules/trycp-server.nix
+    ./modules/conductor.nix
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -19,38 +20,26 @@
   # networking.hostName = "nixos"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.networkmanager.enable =
+    true; # Easiest to use and most distros use this by default.
   networking.hostName = "nuc";
-  networking.interfaces.eno1.ipv4.addresses = [ { address = "192.168.1.80"; prefixLength = 24; } ];
+  networking.interfaces.eno1.ipv4.addresses = [{
+    address = "192.168.1.80";
+    prefixLength = 24;
+  }];
   networking.defaultGateway = "192.168.1.1";
-  networking.nameservers = [ "1.1.1.1" "8.8.8.8"];
+  networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
 
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
 
-    substituters = [
-      "https://holochain-ci.cachix.org"
-      "https://cache.nixos.org"
-    ];
+    substituters =
+      [ "https://holochain-ci.cachix.org" "https://cache.nixos.org" ];
 
     trusted-public-keys = [
       "holochain-ci.cachix.org-1:5IUSkZc0aoRS53rfkvH9Kid40NpyjwCMCzwRTXy+QN8="
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
     ];
-  };
-  
-  services.lair-keystore = {
-    enable = true;
-    passphrase = "default-passphrase";
-  };
-
-  services.conductor = {
-    enable = true;
-    keystorePassphrase = "default-passphrase";
-  };
-
-  services.sysstat = {
-    enable = true;
   };
 
   # Set your time zone.
@@ -85,15 +74,15 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  users.groups.holochain = {};
+  users.groups.holochain = { };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.thetasinner = {
     isNormalUser = true;
     home = "/home/thetasinner";
-    extraGroups = [ 
+    extraGroups = [
       "wheel" # Enable ‘sudo’ for the user.
-      "holochain" 
+      "holochain"
     ];
   };
 
@@ -103,6 +92,11 @@
   };
 
   users.users.conductor = {
+    isSystemUser = true;
+    group = "holochain";
+  };
+
+  users.users.trycp = {
     isSystemUser = true;
     group = "holochain";
   };
@@ -135,8 +129,24 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
+  services.sysstat = { enable = true; };
+
+  services.lair-keystore = {
+    enable = true;
+    passphrase = "default-passphrase";
+  };
+
+  services.conductor = {
+    enable = true;
+    keystorePassphrase = "default-passphrase";
+  };
+
+  services.trycp = { enable = true; };
+
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [
+    9000 # trycp
+  ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
