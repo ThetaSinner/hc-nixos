@@ -2,8 +2,11 @@
 
 with lib;
 
-let cfg = config.services.trycp-server; # The input config for this service
-in {
+let
+  # The input config for this service
+  cfg = config.services.trycp-server;
+in
+{
   options.services.trycp-server = {
     enable = mkEnableOption "TryCP Server";
 

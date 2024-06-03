@@ -141,7 +141,7 @@
     keystorePassphrase = "default-passphrase";
   };
 
-  services.trycp = { enable = true; };
+  services.trycp-server = { enable = true; };
 
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [
