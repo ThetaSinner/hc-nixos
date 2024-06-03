@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-cp /etc/nixos/configuration.nix .
-cp /etc/nixos/flake.nix .
-cp /etc/nixos/modules/lair-keystore.nix ./modules
-cp /etc/nixos/modules/conductor.nix ./modules
+rsync -u ./configuration.nix /etc/nixos/configuration.nix
+rsync -u ./flake.nix /etc/nixos/flake.nix
+rsync -ur --delete ./modules/ /etc/nixos/modules/
 
+rsync -u /etc/nixos/configuration.nix ./configuration.nix
+rsync -u /etc/nixos/flake.nix ./flake.nix
+rsync -ur --delete /etc/nixos/modules/ ./modules/
