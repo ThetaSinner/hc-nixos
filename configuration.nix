@@ -24,10 +24,10 @@
     true; # Easiest to use and most distros use this by default.
   networking.hostName = "nuc";
   networking.interfaces.eno1.ipv4.addresses = [{
-    address = "192.168.1.80";
+    address = "10.27.240.80";
     prefixLength = 24;
   }];
-  networking.defaultGateway = "192.168.1.1";
+  networking.defaultGateway = "10.27.240.222";
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
 
   nix.settings = {
