@@ -1,4 +1,4 @@
-{ lib, config, pkgs, lair-keystore, ... }:
+{ lib, config, pkgs, ... }:
 
 with lib;
 
@@ -10,6 +10,11 @@ in
   options.services.lair-keystore = {
     enable = mkEnableOption "Lair keystore";
 
+    package = lib.mkOption {
+      description = "lair-keystore package to use";
+      type = lib.types.package;
+    };
+
     passphrase = mkOption { type = types.str; };
   };
 
@@ -17,7 +22,7 @@ in
     systemd.services.lair-keystore = {
       wantedBy = [ "multi-user.target" ]; # Start on boot
       description = "Lair keystore";
-      path = [ lair-keystore ];
+      path = [ cfg.package ];
       restartIfChanged = true;
 
       environment = {
@@ -31,13 +36,12 @@ in
           exit 0
         fi
 
+        mkdir -p "$LAIR_ROOT"
         echo -n "${cfg.passphrase}" | lair-keystore --lair-root $LAIR_ROOT init --piped
 
-        echo "$LAIR_ROOT"
-        stat "''${LAIR_ROOT}lair-keystore-config.yaml"
         if ! test -f "\$\{LAIR_ROOT\}lair-keystore-config.yaml"; then
           echo "Either lair failed to initialise or has changed its config file name"
-          ls -al ./
+          ls -al $LAIR_ROOT
           exit 1
         fi
       '';

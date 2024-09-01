@@ -1,4 +1,4 @@
-{ lib, config, pkgs, holochain, ... }:
+{ lib, config, pkgs, ... }:
 
 with lib;
 
@@ -9,6 +9,13 @@ in
 {
   options.services.conductor = {
     enable = mkEnableOption "Holochain conductor";
+
+    package = lib.mkOption {
+      description = "conductor package to use";
+      type = lib.types.package;
+    };
+
+    deviceSeed = mkOption { type = types.str; };
 
     keystorePassphrase = mkOption { type = types.str; };
 
@@ -27,17 +34,17 @@ in
       ]; # Waits for if started at the same time
       bindsTo = [ "lair-keystore.service" ]; # Requires Lair, stop if Lair stops
       description = "Holochain conductor";
-      path = [ holochain pkgs.yq ];
+      path = [ cfg.package pkgs.yq ];
       restartIfChanged = true;
 
       environment = {
-        RUST_LOG = "info,wasmer_compiler_cranelift=warn,holochain_sqlite=trace";
+        RUST_LOG = "info,wasmer_compiler_cranelift=warn";
         RUST_BACKTRACE = "1";
         # HOLOCHAIN_MIGRATE_UNENCRYPTED="true";
       };
 
+      # TODO should be able to pass this to Holochain as an arg rather than needing to modify the file
       preStart = ''
-        # TODO should be able to pass this to Holochain as an arg rather than needing to modify the file
         lair_connection_url=$(yq -r .connectionUrl /var/lib/lair/lair-keystore-config.yaml)
         yq -y "(.keystore.connection_url) = \"$lair_connection_url\"" /etc/holochain/conductor.yaml > /var/lib/conductor/conductor.yaml
       '';
@@ -74,9 +81,13 @@ in
           bootstrap_service = "https://bootstrap.holo.host";
           transport_pool = [{
             type = "webrtc";
-            signal_url = "wss://signal.holo.host";
+            signal_url = "wss://sbd.holo.host";
           }];
           tuning_params = { gossip_strategy = "sharded-gossip"; };
+        };
+        dpki = {
+          device_seed_lair_tag = cfg.deviceSeed;
+          # no_dpki = true;
         };
       } // cfg.config // {
         keystore.type = "lair_server";
