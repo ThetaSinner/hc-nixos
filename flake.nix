@@ -50,11 +50,6 @@
           hcCommon = {...}: {
             users.groups.holochain = {};
 
-            users.users.lair = {
-              isSystemUser = true;
-              group = "holochain";
-            };
-
             users.users.conductor = {
               isSystemUser = true;
               group = "holochain";
@@ -104,7 +99,7 @@
 
             # Configure networking
             networking.useDHCP = false;
-            # networking.interfaces.eth0.useDHCP = true;
+            networking.interfaces.eth0.useDHCP = true;
 
             # Create user "test"
             services.getty.autologinUser = "test";
@@ -136,8 +131,8 @@
             self.nixosModules.lair-keystore
           ];
         in {
-          aarch64-darwin.test = nixpkgs.lib.nixosSystem {
-            system = "aarch64-darwin";
+          aarch64-darwin-test = nixpkgs.lib.nixosSystem {
+            system = "aarch64-linux";
             modules =
               modules
               ++ [
@@ -146,11 +141,11 @@
                 }
               ];
           };
-          aarch64-linux.test = nixpkgs.lib.nixosSystem {
+          aarch64-linux-test = nixpkgs.lib.nixosSystem {
             system = "aarch64-linux";
             inherit modules;
           };
-          x86_64-linux.test = nixpkgs.lib.nixosSystem {
+          x86_64-linux-test = nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             inherit modules;
           };
@@ -172,9 +167,9 @@
         packages.holochain = holonix_0_4.packages.${system}.holochain;
         packages.lair-keystore = holonix_0_4.packages.${system}.lair-keystore;
 
-        packages.vm = self.nixosConfigurations.${system}.test.config.system.build.vm;
+        packages.vm = self.nixosConfigurations."${system}-test".config.system.build.vm;
 
-        checks.test1 = let
+        checks.holochain-with-lair = let
           pkgs = import nixpkgs {inherit system;};
         in
           pkgs.testers.runNixOSTest (import ./tests/holochain-with-lair.nix {inherit self;});

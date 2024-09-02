@@ -1,0 +1,31 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref_name }}
+    cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install nix
+        uses: cachix/install-nix-action@v27
+        with:
+          install_url: https://releases.nixos.org/nix/nix-2.24.4/install
+      - uses: cachix/cachix-action@v15
+        with:
+          name: holochain-ci
+      - name: Check Nix formatting
+        run: nix fmt . -- --check
+      - name: Check Nix flake
+        run: nix flake check --all-systems
+      - name: Runs tests
+        run: |
+          nix build .#checks.x86_64-linux.holochain-with-lair

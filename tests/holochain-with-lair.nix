@@ -1,5 +1,5 @@
 {self, ...}: {
-  name = "Holochain with Lair";
+  name = "Holochain With Lair";
 
   nodes = {
     machine = {pkgs, ...}: {
