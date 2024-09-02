@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - rework
   pull_request:
 
 concurrency:
