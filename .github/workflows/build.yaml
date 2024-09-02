@@ -27,6 +27,3 @@ jobs:
         run: nix fmt . -- --check
       - name: Check Nix flake
         run: nix flake check --all-systems
-      - name: Runs tests
-        run: |
-          nix build .#checks.x86_64-linux.holochain-with-lair
