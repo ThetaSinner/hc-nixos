@@ -1,10 +1,14 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running `nixos-help`).
-
-{ config, pkgs, holochain, lair-keystore, trycp-server, ... }:
-
 {
+  config,
+  pkgs,
+  holochain,
+  lair-keystore,
+  trycp-server,
+  ...
+}: {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -23,18 +27,19 @@
   networking.networkmanager.enable =
     true; # Easiest to use and most distros use this by default.
   networking.hostName = "nuc";
-  networking.interfaces.eno1.ipv4.addresses = [{
-    address = "10.27.240.80";
-    prefixLength = 24;
-  }];
+  networking.interfaces.eno1.ipv4.addresses = [
+    {
+      address = "10.27.240.80";
+      prefixLength = 24;
+    }
+  ];
   networking.defaultGateway = "10.27.240.222";
-  networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
+  networking.nameservers = ["1.1.1.1" "8.8.8.8"];
 
   nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = ["nix-command" "flakes"];
 
-    substituters =
-      [ "https://holochain-ci.cachix.org" "https://cache.nixos.org" ];
+    substituters = ["https://holochain-ci.cachix.org" "https://cache.nixos.org"];
 
     trusted-public-keys = [
       "holochain-ci.cachix.org-1:5IUSkZc0aoRS53rfkvH9Kid40NpyjwCMCzwRTXy+QN8="
@@ -74,7 +79,7 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  users.groups.holochain = { };
+  users.groups.holochain = {};
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.thetasinner = {
@@ -129,7 +134,7 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
-  services.sysstat = { enable = true; };
+  services.sysstat = {enable = true;};
 
   services.lair-keystore = {
     enable = true;
@@ -141,7 +146,7 @@
     keystorePassphrase = "default-passphrase";
   };
 
-  services.trycp-server = { enable = true; };
+  services.trycp-server = {enable = true;};
 
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [
@@ -163,6 +168,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
-
 }
-
