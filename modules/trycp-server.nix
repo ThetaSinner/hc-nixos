@@ -1,12 +1,16 @@
-{ lib, config, pkgs, trycp-server, holochain, lair-keystore, ... }:
-
-with lib;
-
-let
+{
+  lib,
+  config,
+  pkgs,
+  trycp-server,
+  holochain,
+  lair-keystore,
+  ...
+}:
+with lib; let
   # The input config for this service
   cfg = config.services.trycp-server;
-in
-{
+in {
   options.services.trycp-server = {
     enable = mkEnableOption "TryCP Server";
 
@@ -19,12 +23,12 @@ in
 
   config = mkIf cfg.enable {
     systemd.services.trycp-server = {
-      wantedBy = [ "multi-user.target" ]; # Start on boot
+      wantedBy = ["multi-user.target"]; # Start on boot
       description = "TryCP Server";
-      path = [ trycp-server holochain lair-keystore ];
+      path = [trycp-server holochain lair-keystore];
       restartIfChanged = true;
 
-      environment = { RUST_LOG = "warn"; };
+      environment = {RUST_LOG = "warn";};
 
       serviceConfig = {
         User = "trycp";
