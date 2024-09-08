@@ -6,10 +6,15 @@
 }:
 with lib; let
   # The input config for this service
-  cfg = config.services.lair-keystore;
+  cfg = config.services.lair-keystore-0_4;
 in {
-  options.services.lair-keystore = {
+  options.services.lair-keystore-0_4 = {
     enable = mkEnableOption "Lair keystore";
+
+    id = mkOption {
+      description = "The ID of the keystore, keeping it separate from other keystores";
+      type = types.str;
+    };
 
     package = lib.mkOption {
       description = "lair-keystore package to use";
@@ -20,14 +25,14 @@ in {
   };
 
   config = mkIf cfg.enable {
-    systemd.services.lair-keystore = {
+    systemd.services.lair-keystore-0_4 = {
       wantedBy = ["multi-user.target"]; # Start on boot
       description = "Lair keystore";
       path = [cfg.package];
       restartIfChanged = true;
 
       environment = {
-        LAIR_ROOT = "/var/lib/lair/";
+        LAIR_ROOT = "/var/lib/lair-${cfg.id}/";
         # LAIR_MIGRATE_UNENCRYPTED="true";
       };
 
@@ -56,7 +61,7 @@ in {
       serviceConfig = {
         User = "conductor";
         Group = "holochain";
-        StateDirectory = "lair";
+        StateDirectory = "lair-${cfg.id}";
         StateDirectoryMode = "0755";
       };
     };

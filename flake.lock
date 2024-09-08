@@ -35,18 +35,12 @@
       }
     },
     "crane": {
-      "inputs": {
-        "nixpkgs": [
-          "holonix_0_3",
-          "nixpkgs"
-        ]
-      },
       "locked": {
-        "lastModified": 1724537630,
-        "narHash": "sha256-gpqINM71zp3kw5XYwUXa84ZtPnCmLLnByuFoYesT1bY=",
+        "lastModified": 1725125250,
+        "narHash": "sha256-CB20rDD5eHikF6mMTTJdwPP1qvyoiyyw1RDUzwIaIF8=",
         "owner": "ipetkov",
         "repo": "crane",
-        "rev": "3e08f4b1fc9aaede5dd511d8f5f4ef27501e49b0",
+        "rev": "96fd12c7100e9e05fa1a0a5bd108525600ce282f",
         "type": "github"
       },
       "original": {
@@ -56,18 +50,12 @@
       }
     },
     "crane_2": {
-      "inputs": {
-        "nixpkgs": [
-          "holonix_0_4",
-          "nixpkgs"
-        ]
-      },
       "locked": {
-        "lastModified": 1724537630,
-        "narHash": "sha256-gpqINM71zp3kw5XYwUXa84ZtPnCmLLnByuFoYesT1bY=",
+        "lastModified": 1725125250,
+        "narHash": "sha256-CB20rDD5eHikF6mMTTJdwPP1qvyoiyyw1RDUzwIaIF8=",
         "owner": "ipetkov",
         "repo": "crane",
-        "rev": "3e08f4b1fc9aaede5dd511d8f5f4ef27501e49b0",
+        "rev": "96fd12c7100e9e05fa1a0a5bd108525600ce282f",
         "type": "github"
       },
       "original": {
@@ -79,7 +67,7 @@
     "crane_3": {
       "inputs": {
         "nixpkgs": [
-          "tryorama_0_3",
+          "tryorama-0_3",
           "nixpkgs"
         ]
       },
@@ -100,7 +88,7 @@
     "crane_4": {
       "inputs": {
         "nixpkgs": [
-          "tryorama_0_3",
+          "tryorama-0_3",
           "holonix",
           "nixpkgs"
         ]
@@ -122,7 +110,7 @@
     "crane_5": {
       "inputs": {
         "nixpkgs": [
-          "tryorama_0_4",
+          "tryorama-0_4",
           "holonix",
           "nixpkgs"
         ]
@@ -400,16 +388,16 @@
     "holochain_2": {
       "flake": false,
       "locked": {
-        "lastModified": 1724806844,
-        "narHash": "sha256-O2+EB0mK8MCiM2avQ+dHAA9El4iBjdJ6RTUjK4UWlqU=",
+        "lastModified": 1725801354,
+        "narHash": "sha256-YWJHZqwZfFNTcc9LxZeNutTYwvsZafPwRsr2zwgz488=",
         "owner": "holochain",
         "repo": "holochain",
-        "rev": "c5050c4c7b8d2d4015c9ec0c11936f608fdef42d",
+        "rev": "24fcfc237d14febd0a87b345459f48194f39b402",
         "type": "github"
       },
       "original": {
         "owner": "holochain",
-        "ref": "holochain-0.4.0-dev.21",
+        "ref": "only-create-derivation-if-not-exists",
         "repo": "holochain",
         "type": "github"
       }
@@ -458,17 +446,17 @@
         "flake-compat": "flake-compat",
         "flake-parts": "flake-parts_2",
         "holochain": [
-          "tryorama_0_3",
+          "tryorama-0_3",
           "holonix",
           "empty"
         ],
         "lair": [
-          "tryorama_0_3",
+          "tryorama-0_3",
           "holonix",
           "empty"
         ],
         "launcher": [
-          "tryorama_0_3",
+          "tryorama-0_3",
           "holonix",
           "empty"
         ],
@@ -478,12 +466,12 @@
         "repo-git": "repo-git",
         "rust-overlay": "rust-overlay_3",
         "scaffolding": [
-          "tryorama_0_3",
+          "tryorama-0_3",
           "holonix",
           "empty"
         ],
         "versions": [
-          "tryorama_0_3",
+          "tryorama-0_3",
           "versions"
         ]
       },
@@ -501,7 +489,7 @@
         "type": "github"
       }
     },
-    "holonix_0_3": {
+    "holonix-0_3": {
       "inputs": {
         "crane": "crane",
         "flake-parts": [
@@ -517,11 +505,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1724935136,
-        "narHash": "sha256-TAxGCtBJXv/B6gdBD/TNisuRAs7tC9ati89DZr73ddo=",
+        "lastModified": 1725293701,
+        "narHash": "sha256-dwb1tzr7kO8u5LllGqJiIaKe2btsKaMHX1gecgtwruM=",
         "owner": "holochain",
         "repo": "holonix",
-        "rev": "f1a543d4188adbe6ff1cd9229120d5fe3cb96103",
+        "rev": "fb9e3c067052cf628d1b22a1802f016eaf1d3e3e",
         "type": "github"
       },
       "original": {
@@ -531,7 +519,7 @@
         "type": "github"
       }
     },
-    "holonix_0_4": {
+    "holonix-0_4": {
       "inputs": {
         "crane": "crane_2",
         "flake-parts": [
@@ -547,16 +535,16 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1725102368,
-        "narHash": "sha256-95fZMEbCww5hBUITA3IKkOw+WBn60FImjNb9btonR1k=",
+        "lastModified": 1725455839,
+        "narHash": "sha256-KKXP92XRvajV5tdes8fL7nJ7bsxuuX8cBPvoYYtoFhM=",
         "owner": "holochain",
         "repo": "holonix",
-        "rev": "a87612e0c8a44ca8e7f3718ae48e70e3f08f288e",
+        "rev": "732113eb73cb98f0c08c64d0aa641774dd7ae079",
         "type": "github"
       },
       "original": {
         "owner": "holochain",
-        "ref": "add-aarch64-linux",
+        "ref": "main",
         "repo": "holonix",
         "type": "github"
       }
@@ -564,7 +552,7 @@
     "holonix_2": {
       "inputs": {
         "crane": [
-          "tryorama_0_4",
+          "tryorama-0_4",
           "crane"
         ],
         "flake-parts": "flake-parts_3",
@@ -574,7 +562,7 @@
         "lair-keystore": "lair-keystore_3",
         "nixpkgs": "nixpkgs_3",
         "rust-overlay": [
-          "tryorama_0_4",
+          "tryorama-0_4",
           "rust-overlay"
         ]
       },
@@ -813,26 +801,26 @@
     "root": {
       "inputs": {
         "flake-parts": "flake-parts",
-        "holonix_0_3": "holonix_0_3",
-        "holonix_0_4": "holonix_0_4",
+        "holonix-0_3": "holonix-0_3",
+        "holonix-0_4": "holonix-0_4",
         "nixpkgs": "nixpkgs",
-        "tryorama_0_3": "tryorama_0_3",
-        "tryorama_0_4": "tryorama_0_4"
+        "tryorama-0_3": "tryorama-0_3",
+        "tryorama-0_4": "tryorama-0_4"
       }
     },
     "rust-overlay": {
       "inputs": {
         "nixpkgs": [
-          "holonix_0_3",
+          "holonix-0_3",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1724898214,
-        "narHash": "sha256-4yMO9+Lsr3zqTf4clAGGag/bfNTmc/ITOXbJQcOEok4=",
+        "lastModified": 1725243956,
+        "narHash": "sha256-0A5ZP8uDCyBdYUzayZfy6JFdTefP79oZVAjyqA/yuSI=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "0bc2c784e3a6ce30a2ab1b9f47325ccbed13039f",
+        "rev": "a10c8092d5f82622be79ed4dd12289f72011f850",
         "type": "github"
       },
       "original": {
@@ -844,16 +832,16 @@
     "rust-overlay_2": {
       "inputs": {
         "nixpkgs": [
-          "holonix_0_4",
+          "holonix-0_4",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1724898214,
-        "narHash": "sha256-4yMO9+Lsr3zqTf4clAGGag/bfNTmc/ITOXbJQcOEok4=",
+        "lastModified": 1725243956,
+        "narHash": "sha256-0A5ZP8uDCyBdYUzayZfy6JFdTefP79oZVAjyqA/yuSI=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "0bc2c784e3a6ce30a2ab1b9f47325ccbed13039f",
+        "rev": "a10c8092d5f82622be79ed4dd12289f72011f850",
         "type": "github"
       },
       "original": {
@@ -866,7 +854,7 @@
       "inputs": {
         "flake-utils": "flake-utils",
         "nixpkgs": [
-          "tryorama_0_3",
+          "tryorama-0_3",
           "holonix",
           "nixpkgs"
         ]
@@ -889,7 +877,7 @@
       "inputs": {
         "flake-utils": "flake-utils_2",
         "nixpkgs": [
-          "tryorama_0_3",
+          "tryorama-0_3",
           "nixpkgs"
         ]
       },
@@ -910,7 +898,7 @@
     "rust-overlay_5": {
       "inputs": {
         "nixpkgs": [
-          "tryorama_0_4",
+          "tryorama-0_4",
           "holonix",
           "nixpkgs"
         ]
@@ -976,7 +964,7 @@
         "type": "github"
       }
     },
-    "tryorama_0_3": {
+    "tryorama-0_3": {
       "inputs": {
         "crane": "crane_3",
         "holonix": "holonix",
@@ -1001,7 +989,7 @@
         "type": "github"
       }
     },
-    "tryorama_0_4": {
+    "tryorama-0_4": {
       "inputs": {
         "crane": "crane_5",
         "holonix": "holonix_2",

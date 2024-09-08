@@ -6,10 +6,20 @@
 }:
 with lib; let
   # The input config for this service
-  cfg = config.services.conductor;
+  cfg = config.services.conductor-0_4;
 in {
-  options.services.conductor = {
+  options.services.conductor-0_4 = {
     enable = mkEnableOption "Holochain conductor";
+
+    id = mkOption {
+      description = "The ID of the conductor, keeping it separate from other conductors";
+      type = types.str;
+    };
+
+    lairId = mkOption {
+      description = "The ID of the lair-keystore service to use";
+      type = types.str;
+    };
 
     package = lib.mkOption {
       description = "conductor package to use";
@@ -18,7 +28,10 @@ in {
 
     deviceSeed = mkOption {type = types.str;};
 
-    keystorePassphrase = mkOption {type = types.str;};
+    keystorePassphrase = mkOption {
+      description = "The passphrase for Lair";
+      type = types.str;
+    };
 
     config = mkOption {
       type = types.anything;
@@ -27,13 +40,13 @@ in {
   };
 
   config = mkIf cfg.enable {
-    systemd.services.conductor = {
+    systemd.services.conductor-0_4 = {
       wantedBy = ["multi-user.target"]; # Start on boot
       after = [
         "network.target"
-        "lair-keystore.service"
-      ]; # Waits for if started at the same time
-      bindsTo = ["lair-keystore.service"]; # Requires Lair, stop if Lair stops
+        "lair-keystore-0_5.service"
+      ]; # Waits for network and lair started
+      bindsTo = ["lair-keystore-0_5.service"]; # Requires Lair, stop if Lair stops
       description = "Holochain conductor";
       path = [cfg.package pkgs.yq];
       restartIfChanged = true;
@@ -46,29 +59,29 @@ in {
 
       # TODO should be able to pass this to Holochain as an arg rather than needing to modify the file
       preStart = ''
-        lair_connection_url=$(yq -r .connectionUrl /var/lib/lair/lair-keystore-config.yaml)
-        yq -y "(.keystore.connection_url) = \"$lair_connection_url\"" /etc/holochain/conductor.yaml > /var/lib/conductor/conductor.yaml
+        lair_connection_url=$(yq -r .connectionUrl /var/lib/lair-${cfg.lairId}/lair-keystore-config.yaml)
+        yq -y "(.keystore.connection_url) = \"$lair_connection_url\"" /etc/holochain-${cfg.id}/conductor.yaml > /var/lib/conductor-${cfg.id}/conductor.yaml
       '';
 
       script = ''
-        echo -n "${cfg.keystorePassphrase}" | holochain -c /var/lib/conductor/conductor.yaml --piped
+        echo -n "${cfg.keystorePassphrase}" | holochain -c /var/lib/conductor-${cfg.id}/conductor.yaml --piped
       '';
 
       serviceConfig = {
         User = "conductor";
         Group = "holochain";
-        StateDirectory = "conductor";
+        StateDirectory = "conductor-${cfg.id}";
         StateDirectoryMode = "0755";
         Restart = "always";
         RestartSec = 1;
-        Type = "notify";
+        Type = "notify"; # The conductor sends a notify signal to systemd when it is ready
         NotifyAccess = "all";
       };
     };
 
-    environment.etc."holochain/conductor.yaml".source = (pkgs.formats.yaml {}).generate "conductor.yaml" ({
-        data_root_path = "/var/lib/conductor";
-        db_sync_strategy = "Fast";
+    environment.etc."holochain-${cfg.id}/conductor.yaml".source = (pkgs.formats.yaml {}).generate "conductor.yaml" ({
+        data_root_path = "/var/lib/conductor-${cfg.id}";
+        db_sync_strategy = "Resilient";
         admin_interfaces = [
           {
             driver = {
@@ -89,9 +102,9 @@ in {
           ];
           tuning_params = {gossip_strategy = "sharded-gossip";};
         };
+        device_seed_lair_tag = cfg.deviceSeed;
         dpki = {
-          device_seed_lair_tag = cfg.deviceSeed;
-          # no_dpki = true;
+          no_dpki = false;
         };
       }
       // cfg.config

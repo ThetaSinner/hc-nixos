@@ -1,0 +1,4 @@
+*.bundle
+*.qcow2
+**/node_modules
+result
