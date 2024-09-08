@@ -1,0 +1,33 @@
+{
+  "name": "seed-tool",
+  "version": "0.1.0",
+  "description": "A CLI tool for generating a seed bundle",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThetaSinner/hc-nixos.git"
+  },
+  "keywords": [
+    "holochain",
+    "seed"
+  ],
+  "type": "module",
+  "author": "ThetaSinner",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/ThetaSinner/hc-nixos/issues"
+  },
+  "homepage": "https://github.com/ThetaSinner/hc-nixos#readme",
+  "dependencies": {
+    "@holochain/hc-seed-bundle": "^0.1.1",
+    "@inquirer/prompts": "^5.5.0",
+    "commander": "^12.1.0",
+    "libsodium-wrappers": "^0.7.15"
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3"
+  }
+}
