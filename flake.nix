@@ -21,7 +21,7 @@
     holonix-0_4 = {
       url = "github:holochain/holonix?ref=main";
       inputs = {
-        holochain.url = "github:holochain/holochain?ref=only-create-derivation-if-not-exists";
+        holochain.url = "github:holochain/holochain?ref=holochain-0.4.0-dev.25";
         nixpkgs.follows = "nixpkgs";
         flake-parts.follows = "flake-parts";
       };

@@ -105,6 +105,7 @@ in {
         device_seed_lair_tag = cfg.deviceSeed;
         dpki = {
           no_dpki = false;
+          network_seed = "deepkey-main";
         };
       }
       // cfg.config
