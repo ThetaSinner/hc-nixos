@@ -22,10 +22,6 @@ in {
     };
 
     passphrase = mkOption {type = types.str;};
-
-    deviceSeed = mkOption {type = types.str;};
-
-    seedPassphrase = mkOption {type = types.str;};
   };
 
   config = mkIf cfg.enable {
@@ -56,9 +52,7 @@ in {
           exit 1
         fi
 
-         printf "${cfg.passphrase}\n${cfg.seedPassphrase}" | lair-keystore import-seed --piped ${cfg.deviceSeed} $(cat "/etc/lair-${cfg.id}/device.bundle")
-
-         echo "Lair initialised and seeded"
+        echo "Lair initialised"
       '';
 
       script = ''

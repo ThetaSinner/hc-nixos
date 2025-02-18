@@ -26,8 +26,6 @@ in {
       type = lib.types.package;
     };
 
-    deviceSeed = mkOption {type = types.str;};
-
     keystorePassphrase = mkOption {
       description = "The passphrase for Lair";
       type = types.str;
@@ -105,7 +103,6 @@ in {
             arc_clamping = "full";
           };
         };
-        device_seed_lair_tag = cfg.deviceSeed;
         dpki = {
           no_dpki = true;
           network_seed = "deepkey-main";
