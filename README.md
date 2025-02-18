@@ -40,12 +40,12 @@ nix develop -c node ./seed-tool/index.js derive --root root.bundle --out mymachi
 
 Keep the `root.bundle` safe. It's the device bundle that you will need to deploy.
 
-The following is a very rough, sample flake. It will get you up and running but you likely want to make improvements.
+The following is a very rough, sample flake. It will get you up and running, but you likely want to make improvements.
 
 ```nix
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=24.05";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-24.11";
     hc-nixos = {
       url = "github:ThetaSinner/hc-nixos?ref=rework";
       inputs.nixpkgs.follows = "nixpkgs";
