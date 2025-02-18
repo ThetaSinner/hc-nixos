@@ -7,24 +7,10 @@
       url = "github:holochain/holonix?ref=main-0.3";
     };
 
-    tryorama-0_3 = {
-      url = "github:holochain/tryorama?ref=main-0.3";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
-
     holonix-0_4 = {
       url = "github:holochain/holonix?ref=main-0.4";
       inputs = {
         holochain.url = "github:holochain/holochain?ref=holochain-0.4.1";
-      };
-    };
-
-    tryorama-0_4 = {
-      url = "github:holochain/tryorama?ref=main-0.4";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
       };
     };
 
@@ -34,13 +20,6 @@
         holochain.url = "github:holochain/holochain?ref=holochain-0.5.0-dev.18";
       };
     };
-
-    tryorama-0_5 = {
-      url = "github:holochain/tryorama?ref=main";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
   };
 
   outputs = inputs @ {
@@ -48,11 +27,8 @@
     nixpkgs,
     flake-parts,
     holonix-0_3,
-    tryorama-0_3,
     holonix-0_4,
-    tryorama-0_4,
     holonix-0_5,
-    tryorama-0_5,
     ...
   }:
     flake-parts.lib.mkFlake {inherit inputs;} ({withSystem, ...}: {
@@ -62,11 +38,6 @@
             users.groups.holochain = {};
 
             users.users.conductor = {
-              isSystemUser = true;
-              group = "holochain";
-            };
-
-            users.users.trycp = {
               isSystemUser = true;
               group = "holochain";
             };
@@ -88,9 +59,6 @@
           };
           lair-keystore-for-0_5 = {pkgs, ...}: {
             imports = [./modules/lair-keystore-for-0_5.nix];
-          };
-          trycp-server = {pkgs, ...}: {
-            imports = [./modules/trycp-server.nix];
           };
         };
 
