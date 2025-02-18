@@ -34,7 +34,7 @@
         deviceSeed = "test";
       };
 
-      system.stateVersion = "24.04";
+      system.stateVersion = "24.11";
     };
   };
 

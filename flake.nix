@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=24.05";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-24.11";
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     holonix-0_3 = {
@@ -12,7 +12,7 @@
     };
 
     tryorama-0_3 = {
-      url = "github:holochain/tryorama?ref=main";
+      url = "github:holochain/tryorama?ref=main-0.3";
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };
@@ -21,14 +21,14 @@
     holonix-0_4 = {
       url = "github:holochain/holonix?ref=main";
       inputs = {
-        holochain.url = "github:holochain/holochain?ref=holochain-0.4.0-dev.25";
+        holochain.url = "github:holochain/holochain?ref=holochain-0.4.1";
         nixpkgs.follows = "nixpkgs";
         flake-parts.follows = "flake-parts";
       };
     };
 
     tryorama-0_4 = {
-      url = "github:holochain/tryorama?ref=develop";
+      url = "github:holochain/tryorama?ref=main-0.4";
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };

@@ -100,11 +100,14 @@ in {
               signal_url = "wss://sbd.holo.host";
             }
           ];
-          tuning_params = {gossip_strategy = "sharded-gossip";};
+          tuning_params = {
+            gossip_strategy = "sharded-gossip";
+            arc_clamping = "full";
+          };
         };
         device_seed_lair_tag = cfg.deviceSeed;
         dpki = {
-          no_dpki = false;
+          no_dpki = true;
           network_seed = "deepkey-main";
         };
       }
