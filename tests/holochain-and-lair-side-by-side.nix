@@ -50,15 +50,11 @@
         };
       };
 
-      environment.etc."lair-testB/device.bundle".text = builtins.readFile ./sample-device-seed.bundle;
-
       services.lair-keystore-for-0_4 = {
         enable = true;
         id = "testB";
         package = holonix-0_4.packages.${system}.lair-keystore;
         passphrase = "passwordB";
-        deviceSeed = "test";
-        seedPassphrase = "pass";
       };
 
       services.conductor-0_4 = {
@@ -66,7 +62,6 @@
         id = "testB";
         lairId = "testB";
         package = holonix-0_4.packages.${system}.holochain;
-        deviceSeed = "test";
         keystorePassphrase = "passwordB";
         config = {
           admin_interfaces = [
@@ -86,8 +81,6 @@
         id = "testC";
         package = holonix-0_4.packages.${system}.lair-keystore;
         passphrase = "passwordC";
-        deviceSeed = "test";
-        seedPassphrase = "pass";
       };
 
       services.conductor-0_5 = {

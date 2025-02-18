@@ -20,25 +20,11 @@ as an input. Something like:
 }
 ```
 
-This flake attempts to provide Holochain for its upcoming and stable releases. Currently, this would be the 0.4 
-development versions and the stable 0.3 version.
+This flake attempts to provide Holochain for its upcoming and stable releases. Currently, this would be the 0.5 
+development versions, the 0.4 stable versions and the 0.3 maintenance versions.
 
 There isn't necessarily a migration path between minor versions of Holochain, so please refer to Holochain documentation
 when upgrading. Just changing the version that you are consuming from this flake is unlikely to work.
-
-For Holochain 0.4 onwards, before you can get started, you will need a seed bundle for DPKI. You can use the CLI provided
-by this project to generate one. For example:
-
-```shell
-nix develop -c node ./seed-tool/index.js generate --out root.bundle
-# Provide a password
-
-nix develop -c node ./seed-tool/index.js derive --root root.bundle --out mymachine.bundle
-# Provide the password from step 1 again
-# Provide a password for this device bundle
-````
-
-Keep the `root.bundle` safe. It's the device bundle that you will need to deploy.
 
 The following is a very rough, sample flake. It will get you up and running, but you likely want to make improvements.
 
@@ -47,7 +33,7 @@ The following is a very rough, sample flake. It will get you up and running, but
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-24.11";
     hc-nixos = {
-      url = "github:ThetaSinner/hc-nixos?ref=rework";
+      url = "github:ThetaSinner/hc-nixos?ref=main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -58,27 +44,22 @@ The following is a very rough, sample flake. It will get you up and running, but
       modules = [
         ./configuration.nix
         hc-nixos.nixosModules.hcCommon # Adds groups and users
-        hc-nixos.nixosModules.lair-keystore-0_5 # Define the Lair service
+        hc-nixos.nixosModules.lair-keystore-for-0_4 # Define the Lair service
         hc-nixos.nixosModules.conductor-0_4 # Define the Conductor service
         ({ pkgs, ... }: {
-          environment.etc."lair-myMachine/device.bundle".text = "<contents of mymachine.bundle>";
-
-          services.lair-keystore-0_5 = {
+          services.lair-keystore-for-0_4 = {
             enable = true;
-            id = "lair-05";
+            id = "lair";
             package = hc-nixos.inputs.holonix-0_4.packages.x86_64-linux.lair-keystore;
             passphrase = "pass"; # Secret, conductor must launch with the same phrase
-            deviceSeed = "myMachine-seed"; # Not secret, just a name
-            seedPassphrase = "<chosen in step 2 above>"; # Secret
           };
 
           services.conductor-0_4 = {
             enable = true;
-            id = "conductor-04";
-            lairId = "lair-05";
+            id = "conductor";
+            lairId = "lair";
             package = hc-nixos.inputs.holonix-0_4.packages.x86_64-linux.holochain;
             keystorePassphrase = "pass"; # Secret, see Lair
-            deviceSeed = "myMachine-seed"; # Not secret, see Lair
           };
 
           # Include the Holochain tools and sqlcipher which can be useful for debugging or fixing corrupted sqlite databases etc.
@@ -117,11 +98,11 @@ sudo nixos-rebuild switch
 
 You are free to override the configuration, run with an embedded Lair keystore or even run multiple Holochain versions
 side by side. I've started adding NixOS tests to demonstrate some different ways of running Holochain and showing how
-to configure it. You may use the tests under `tests` as a reference if you want some hints on how to do this.
+to configure it. You may use the tests under `tests` as a reference if you want some hints about how to do this.
 
-Please note that the tests are not intended to be secure or production ready. They are just a way to demonstrate how
-to configure Holochain in different ways. It's left to you to ensure that your Holochain configuration is appropriate
-for your use case.
+Please note that the tests are not intended to be secure or production ready. They are primarily for verification and 
+to demonstrate how to configure Holochain in different ways. It's left to you to ensure that your Holochain 
+configuration is appropriate for your use-case.
 
 ### Testing interactively with a VM
 

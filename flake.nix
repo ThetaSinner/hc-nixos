@@ -161,15 +161,11 @@
                 holonix-0_4.packages.${system}.holochain
               ];
 
-              environment.etc."lair-test/device.bundle".text = builtins.readFile ./tests/sample-device-seed.bundle;
-
               services.lair-keystore-for-0_4 = {
                 enable = true;
                 id = "test";
                 package = holonix-0_4.packages.${system}.lair-keystore;
                 passphrase = "password";
-                deviceSeed = "test";
-                seedPassphrase = "pass";
               };
 
               services.conductor-0_4 = {
@@ -178,7 +174,6 @@
                 lairId = "test";
                 package = holonix-0_4.packages.${system}.holochain;
                 keystorePassphrase = "password";
-                deviceSeed = "test";
               };
             }
             self.nixosModules.hcCommon
@@ -198,8 +193,6 @@
                 id = "test";
                 package = holonix-0_5.packages.${system}.lair-keystore;
                 passphrase = "password";
-                deviceSeed = "test";
-                seedPassphrase = "pass";
               };
 
               services.conductor-0_5 = {
