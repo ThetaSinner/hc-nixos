@@ -5,10 +5,6 @@
 
     holonix-0_3 = {
       url = "github:holochain/holonix?ref=main-0.3";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-parts.follows = "flake-parts";
-      };
     };
 
     tryorama-0_3 = {
@@ -22,8 +18,6 @@
       url = "github:holochain/holonix?ref=main-0.4";
       inputs = {
         holochain.url = "github:holochain/holochain?ref=holochain-0.4.1";
-        nixpkgs.follows = "nixpkgs";
-        flake-parts.follows = "flake-parts";
       };
     };
 
@@ -38,8 +32,6 @@
       url = "github:holochain/holonix?ref=main";
       inputs = {
         holochain.url = "github:holochain/holochain?ref=holochain-0.5.0-dev.18";
-        nixpkgs.follows = "nixpkgs";
-        flake-parts.follows = "flake-parts";
       };
     };
 
