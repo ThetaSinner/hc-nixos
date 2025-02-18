@@ -3,6 +3,7 @@
   system,
   holonix-0_3,
   holonix-0_4,
+  holonix-0_5,
   ...
 }: {
   name = "Holochain With Lair Side By Side";
@@ -15,13 +16,15 @@
     }: {
       imports = [
         self.outputs.nixosModules.hcCommon
-        self.outputs.nixosModules.lair-keystore-0_4
-        self.outputs.nixosModules.lair-keystore-0_5
+        self.outputs.nixosModules.lair-keystore-for-0_3
+        self.outputs.nixosModules.lair-keystore-for-0_4
+        self.outputs.nixosModules.lair-keystore-for-0_5
         self.outputs.nixosModules.conductor-0_3
         self.outputs.nixosModules.conductor-0_4
+        self.outputs.nixosModules.conductor-0_5
       ];
 
-      services.lair-keystore-0_4 = {
+      services.lair-keystore-for-0_3 = {
         enable = true;
         id = "testA";
         package = holonix-0_3.packages.${system}.lair-keystore;
@@ -49,7 +52,7 @@
 
       environment.etc."lair-testB/device.bundle".text = builtins.readFile ./sample-device-seed.bundle;
 
-      services.lair-keystore-0_5 = {
+      services.lair-keystore-for-0_4 = {
         enable = true;
         id = "testB";
         package = holonix-0_4.packages.${system}.lair-keystore;
@@ -71,6 +74,34 @@
               driver = {
                 type = "websocket";
                 port = 8002;
+                allowed_origins = "*";
+              };
+            }
+          ];
+        };
+      };
+
+      services.lair-keystore-for-0_5 = {
+        enable = true;
+        id = "testC";
+        package = holonix-0_4.packages.${system}.lair-keystore;
+        passphrase = "passwordC";
+        deviceSeed = "test";
+        seedPassphrase = "pass";
+      };
+
+      services.conductor-0_5 = {
+        enable = true;
+        id = "testC";
+        lairId = "testC";
+        package = holonix-0_5.packages.${system}.holochain;
+        keystorePassphrase = "passwordC";
+        config = {
+          admin_interfaces = [
+            {
+              driver = {
+                type = "websocket";
+                port = 8003;
                 allowed_origins = "*";
               };
             }

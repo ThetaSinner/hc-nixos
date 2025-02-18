@@ -10,11 +10,11 @@
     machine = {pkgs, ...}: {
       imports = [
         self.outputs.nixosModules.hcCommon
-        self.outputs.nixosModules.lair-keystore-0_4
+        self.outputs.nixosModules.lair-keystore-for-0_3
         self.outputs.nixosModules.conductor-0_3
       ];
 
-      services.lair-keystore-0_4 = {
+      services.lair-keystore-for-0_3 = {
         enable = true;
         id = "test";
         package = holonix.packages.${system}.lair-keystore;
