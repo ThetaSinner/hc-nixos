@@ -6,9 +6,9 @@
 }:
 with lib; let
   # The input config for this service
-  cfg = config.services.lair-keystore-0_5;
+  cfg = config.services.lair-keystore-for-0_4;
 in {
-  options.services.lair-keystore-0_5 = {
+  options.services.lair-keystore-for-0_4 = {
     enable = mkEnableOption "Lair keystore";
 
     id = mkOption {
@@ -29,9 +29,9 @@ in {
   };
 
   config = mkIf cfg.enable {
-    systemd.services.lair-keystore-0_5 = {
+    systemd.services.lair-keystore-for-0_4 = {
       wantedBy = ["multi-user.target"]; # Start on boot
-      description = "Lair keystore";
+      description = "Lair keystore for Holochain 0.4";
       path = [cfg.package];
       restartIfChanged = true;
 

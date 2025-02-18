@@ -42,9 +42,9 @@ in {
       wantedBy = ["multi-user.target"]; # Start on boot
       after = [
         "network.target"
-        "lair-keystore-0_4.service"
+        "lair-keystore-for-0_3.service"
       ]; # Waits for network and lair started
-      bindsTo = ["lair-keystore-0_4.service"]; # Requires Lair, stop if Lair stops
+      bindsTo = ["lair-keystore-for-0_3.service"]; # Requires Lair, stop if Lair stops
       description = "Holochain conductor: ${cfg.id}";
       path = [cfg.package pkgs.yq];
       restartIfChanged = true;

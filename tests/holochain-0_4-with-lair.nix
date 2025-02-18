@@ -10,13 +10,13 @@
     machine = {pkgs, ...}: {
       imports = [
         self.outputs.nixosModules.hcCommon
-        self.outputs.nixosModules.lair-keystore-0_5
+        self.outputs.nixosModules.lair-keystore-for-0_4
         self.outputs.nixosModules.conductor-0_4
       ];
 
       environment.etc."lair-test/device.bundle".text = builtins.readFile ./sample-device-seed.bundle;
 
-      services.lair-keystore-0_5 = {
+      services.lair-keystore-for-0_4 = {
         enable = true;
         id = "test";
         package = holonix.packages.${system}.lair-keystore;

@@ -88,11 +88,14 @@
           conductor-0_5 = {pkgs, ...}: {
             imports = [./modules/conductor-0_5.nix];
           };
-          lair-keystore-0_4 = {pkgs, ...}: {
-            imports = [./modules/lair-keystore-0_4.nix];
+          lair-keystore-for-0_3 = {pkgs, ...}: {
+            imports = [./modules/lair-keystore-for-0_3.nix];
           };
-          lair-keystore-0_5 = {pkgs, ...}: {
-            imports = [./modules/lair-keystore-0_5.nix];
+          lair-keystore-for-0_4 = {pkgs, ...}: {
+            imports = [./modules/lair-keystore-for-0_4.nix];
+          };
+          lair-keystore-for-0_5 = {pkgs, ...}: {
+            imports = [./modules/lair-keystore-for-0_5.nix];
           };
           trycp-server = {pkgs, ...}: {
             imports = [./modules/trycp-server.nix];
@@ -131,7 +134,7 @@
           mkModules-0_3 = {system}: [
             vmModule
             {
-              services.lair-keystore-0_4 = {
+              services.lair-keystore-for-0_3 = {
                 enable = true;
                 id = "test";
                 package = holonix-0_3.packages.${system}.lair-keystore;
@@ -148,7 +151,7 @@
             }
             self.nixosModules.hcCommon
             self.nixosModules.conductor-0_3
-            self.nixosModules.lair-keystore-0_4
+            self.nixosModules.lair-keystore-for-0_3
           ];
           mkModules-0_4 = {system}: [
             vmModule
@@ -160,7 +163,7 @@
 
               environment.etc."lair-test/device.bundle".text = builtins.readFile ./tests/sample-device-seed.bundle;
 
-              services.lair-keystore-0_5 = {
+              services.lair-keystore-for-0_4 = {
                 enable = true;
                 id = "test";
                 package = holonix-0_4.packages.${system}.lair-keystore;
@@ -180,7 +183,7 @@
             }
             self.nixosModules.hcCommon
             self.nixosModules.conductor-0_4
-            self.nixosModules.lair-keystore-0_5
+            self.nixosModules.lair-keystore-for-0_4
           ];
           mkModules-0_5 = {system}: [
             vmModule
@@ -190,7 +193,7 @@
                 holonix-0_5.packages.${system}.holochain
               ];
 
-              services.lair-keystore-0_5 = {
+              services.lair-keystore-for-0_4 = {
                 enable = true;
                 id = "test";
                 package = holonix-0_5.packages.${system}.lair-keystore;
@@ -209,7 +212,7 @@
             }
             self.nixosModules.hcCommon
             self.nixosModules.conductor-0_5
-            self.nixosModules.lair-keystore-0_5
+            self.nixosModules.lair-keystore-for-0_4
           ];
         in {
           aarch64-darwin-test-0_3 = nixpkgs.lib.nixosSystem rec {
@@ -314,6 +317,7 @@
             inherit self system;
             holonix-0_3 = holonix-0_3;
             holonix-0_4 = holonix-0_4;
+            holonix-0_5 = holonix-0_5;
           });
         };
       };
