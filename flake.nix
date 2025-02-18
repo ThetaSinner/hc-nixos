@@ -258,11 +258,23 @@
             inherit self system;
             holonix = holonix-0_3;
           });
+          holochain-0_3-with-in-proc-lair = pkgs.testers.runNixOSTest (import ./tests/holochain-0_3-with-in-proc-lair.nix {
+            inherit self system;
+            holonix = holonix-0_3;
+          });
           holochain-0_4-with-lair = pkgs.testers.runNixOSTest (import ./tests/holochain-0_4-with-lair.nix {
             inherit self system;
             holonix = holonix-0_4;
           });
+          holochain-0_4-with-in-proc-lair = pkgs.testers.runNixOSTest (import ./tests/holochain-0_4-with-in-proc-lair.nix {
+            inherit self system;
+            holonix = holonix-0_4;
+          });
           holochain-0_5-with-lair = pkgs.testers.runNixOSTest (import ./tests/holochain-0_5-with-lair.nix {
+            inherit self system;
+            holonix = holonix-0_5;
+          });
+          holochain-0_5-with-in-proc-lair = pkgs.testers.runNixOSTest (import ./tests/holochain-0_5-with-in-proc-lair.nix {
             inherit self system;
             holonix = holonix-0_5;
           });

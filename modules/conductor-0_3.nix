@@ -7,6 +7,8 @@
 with lib; let
   # The input config for this service
   cfg = config.services.conductor-0_3;
+
+  keystore_type = (cfg.config.keystore or {}).type or "lair_server";
 in {
   options.services.conductor-0_3 = {
     enable = mkEnableOption "Holochain conductor";
@@ -40,11 +42,26 @@ in {
   config = mkIf cfg.enable {
     systemd.services.conductor-0_3 = {
       wantedBy = ["multi-user.target"]; # Start on boot
-      after = [
-        "network.target"
-        "lair-keystore-for-0_3.service"
-      ]; # Waits for network and lair started
-      bindsTo = ["lair-keystore-for-0_3.service"]; # Requires Lair, stop if Lair stops
+      after =
+        [
+          # Wait for the network to be ready before starting this service
+          "network.target"
+        ]
+        ++ (
+          if keystore_type == "lair_server"
+          then [
+            # When Lair is running as a separate service, wait for it to start
+            "lair-keystore-for-0_3.service"
+          ]
+          else []
+        );
+      bindsTo =
+        if keystore_type == "lair_server"
+        then [
+          # When Lair us running as a separate service, require Lair to be running, stop if Lair stops
+          "lair-keystore-for-0_3.service"
+        ]
+        else [];
       description = "Holochain conductor: ${cfg.id}";
       path = [cfg.package pkgs.yq];
       restartIfChanged = true;
@@ -56,10 +73,15 @@ in {
       };
 
       # TODO should be able to pass this to Holochain as an arg rather than needing to modify the file
-      preStart = ''
-        lair_connection_url=$(yq -r .connectionUrl /var/lib/lair-${cfg.lairId}/lair-keystore-config.yaml)
-        yq -y "(.keystore.connection_url) = \"$lair_connection_url\"" /etc/holochain-${cfg.id}/conductor.yaml > /var/lib/conductor-${cfg.id}/conductor.yaml
-      '';
+      preStart =
+        if keystore_type == "lair_server"
+        then ''
+          lair_connection_url=$(yq -r .connectionUrl /var/lib/lair-${cfg.lairId}/lair-keystore-config.yaml)
+          yq -y "(.keystore.connection_url) = \"$lair_connection_url\"" /etc/holochain-${cfg.id}/conductor.yaml > /var/lib/conductor-${cfg.id}/conductor.yaml
+        ''
+        else ''
+          cp /etc/holochain-${cfg.id}/conductor.yaml /var/lib/conductor-${cfg.id}/conductor.yaml
+        '';
 
       script = ''
         echo -n "${cfg.keystorePassphrase}" | holochain -c /var/lib/conductor-${cfg.id}/conductor.yaml --piped
@@ -100,10 +122,18 @@ in {
           ];
           tuning_params = {gossip_strategy = "sharded-gossip";};
         };
+        keystore =
+          {
+            type = keystore_type;
+          }
+          // (
+            if keystore_type == "lair_server_in_proc"
+            then {
+              lair_root = "/var/lib/conductor-${cfg.id}/keystore/";
+            }
+            else {}
+          );
       }
-      // cfg.config
-      // {
-        keystore.type = "lair_server";
-      });
+      // cfg.config);
   };
 }
