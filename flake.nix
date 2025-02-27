@@ -27,6 +27,10 @@
         holochain.url = "github:holochain/holochain?ref=holochain-0.5.0-dev.20";
       };
     };
+
+    hc-ops = {
+        url = "github:ThetaSinner/hc-ops";
+    };
   };
 
   outputs = inputs @ {
@@ -36,6 +40,7 @@
     holonix-0_3,
     holonix-0_4,
     holonix-0_5,
+    hc-ops,
     ...
   }:
     flake-parts.lib.mkFlake {inherit inputs;} ({withSystem, ...}: {
@@ -248,6 +253,7 @@
         packages.vm-0_3 = self.nixosConfigurations."${system}-test-0_3".config.system.build.vm;
         packages.vm-0_4 = self.nixosConfigurations."${system}-test-0_4".config.system.build.vm;
         packages.vm-0_5 = self.nixosConfigurations."${system}-test-0_5".config.system.build.vm;
+        packages.hc-ops = hc-ops.packages.${system}.hc-ops;
 
         devShells.default = pkgs.mkShell {
           packages =
@@ -255,6 +261,8 @@
             ++ (with holonix-0_5.packages.${system}; [
               lair-keystore
               holochain
+            ] ++ [
+              hc-ops.packages.${system}.hc-ops
             ]);
         };
 
