@@ -250,11 +250,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1740686103,
-        "narHash": "sha256-sN1MF2tbAzwfHx4FXfSbJzsliBZbvlLWPzHw07TxWS4=",
+        "lastModified": 1740689702,
+        "narHash": "sha256-0kKqTX5VF2RTfEXdwt9TOBc+MGNiKC9jz+NtMgZTQKw=",
         "owner": "ThetaSinner",
         "repo": "hc-ops",
-        "rev": "92b843c66a98fd3664040065d0109449597400b7",
+        "rev": "4097b67810893943503aad1156bbbb408cac105a",
         "type": "github"
       },
       "original": {
@@ -697,11 +697,11 @@
     },
     "nixpkgs_5": {
       "locked": {
-        "lastModified": 1740463929,
-        "narHash": "sha256-4Xhu/3aUdCKeLfdteEHMegx5ooKQvwPHNkOgNCXQrvc=",
+        "lastModified": 1740603184,
+        "narHash": "sha256-t+VaahjQAWyA+Ctn2idyo1yxRIYpaDxMgHkgCNiMJa4=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "5d7db4668d7a0c6cc5fc8cf6ef33b008b2b1ed8b",
+        "rev": "f44bd8ca21e026135061a0a57dcf3d0775b67a49",
         "type": "github"
       },
       "original": {
