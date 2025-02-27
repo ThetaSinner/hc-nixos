@@ -29,7 +29,7 @@
     };
 
     hc-ops = {
-        url = "github:ThetaSinner/hc-ops";
+      url = "github:ThetaSinner/hc-ops";
     };
   };
 
@@ -258,12 +258,14 @@
         devShells.default = pkgs.mkShell {
           packages =
             (with pkgs; [nodejs_22])
-            ++ (with holonix-0_5.packages.${system}; [
-              lair-keystore
-              holochain
-            ] ++ [
-              hc-ops.packages.${system}.hc-ops
-            ]);
+            ++ (with holonix-0_5.packages.${system};
+              [
+                lair-keystore
+                holochain
+              ]
+              ++ [
+                hc-ops.packages.${system}.hc-ops
+              ]);
         };
 
         checks = let
