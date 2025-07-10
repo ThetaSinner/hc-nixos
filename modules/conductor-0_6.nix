@@ -13,11 +13,11 @@
 }:
 with lib; let
   # The input config for this service
-  cfg = config.services.conductor-0_5;
+  cfg = config.services.conductor-0_6;
 
   keystore_type = (cfg.config.keystore or {}).type or "lair_server";
 in {
-  options.services.conductor-0_5 = {
+  options.services.conductor-0_6 = {
     enable = mkEnableOption "Holochain conductor";
 
     id = mkOption {
@@ -47,7 +47,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    systemd.services.conductor-0_5 = {
+    systemd.services.conductor-0_6 = {
       wantedBy = ["multi-user.target"]; # Start on boot
       after =
         [
@@ -58,7 +58,7 @@ in {
           if keystore_type == "lair_server"
           then [
             # When Lair is running as a separate service, wait for it to start
-            "lair-keystore-for-0_5.service"
+            "lair-keystore-for-0_6.service"
           ]
           else []
         );
@@ -66,7 +66,7 @@ in {
         if keystore_type == "lair_server"
         then [
           # When Lair us running as a separate service, require Lair to be running, stop if Lair stops
-          "lair-keystore-for-0_5.service"
+          "lair-keystore-for-0_6.service"
         ]
         else [];
       description = "Holochain conductor";
@@ -132,10 +132,6 @@ in {
             ];
           };
           target_arc_factor = 1;
-        };
-        dpki = {
-          no_dpki = true;
-          network_seed = "deepkey-main";
         };
         keystore =
           {

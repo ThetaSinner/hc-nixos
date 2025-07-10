@@ -31,7 +31,7 @@ The following is a very rough, sample flake. It will get you up and running, but
 ```nix
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.05";
     hc-nixos = {
       url = "github:ThetaSinner/hc-nixos?ref=main";
       inputs.nixpkgs.follows = "nixpkgs";
