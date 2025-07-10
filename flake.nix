@@ -7,7 +7,7 @@
 */
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.05";
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     holonix-0_3 = {
@@ -17,14 +17,21 @@
     holonix-0_4 = {
       url = "github:holochain/holonix?ref=main-0.4";
       inputs = {
-        holochain.url = "github:holochain/holochain?ref=holochain-0.4.2";
+        holochain.url = "github:holochain/holochain?ref=holochain-0.4.4";
       };
     };
 
     holonix-0_5 = {
+      url = "github:holochain/holonix?ref=main-0.5";
+      inputs = {
+        holochain.url = "github:holochain/holochain?ref=holochain-0.5.4";
+      };
+    };
+
+    holonix-0_6 = {
       url = "github:holochain/holonix?ref=main";
       inputs = {
-        holochain.url = "github:holochain/holochain?ref=holochain-0.5.0-dev.21";
+        holochain.url = "github:holochain/holochain?ref=holochain-0.6.0-dev.12";
       };
     };
 
@@ -40,6 +47,7 @@
     holonix-0_3,
     holonix-0_4,
     holonix-0_5,
+    holonix-0_6,
     hc-ops,
     ...
   }:
@@ -63,6 +71,9 @@
           conductor-0_5 = {pkgs, ...}: {
             imports = [./modules/conductor-0_5.nix];
           };
+          conductor-0_6 = {pkgs, ...}: {
+            imports = [./modules/conductor-0_6.nix];
+          };
           lair-keystore-for-0_3 = {pkgs, ...}: {
             imports = [./modules/lair-keystore-for-0_3.nix];
           };
@@ -71,6 +82,9 @@
           };
           lair-keystore-for-0_5 = {pkgs, ...}: {
             imports = [./modules/lair-keystore-for-0_5.nix];
+          };
+          lair-keystore-for-0_6 = {pkgs, ...}: {
+            imports = [./modules/lair-keystore-for-0_6.nix];
           };
         };
 
@@ -86,7 +100,7 @@
               "${modulesPath}/virtualisation/qemu-vm.nix"
             ];
 
-            system.stateVersion = "24.11";
+            system.stateVersion = "25.05";
 
             # Configure networking
             networking.useDHCP = false;
@@ -160,7 +174,7 @@
                 holonix-0_5.packages.${system}.holochain
               ];
 
-              services.lair-keystore-for-0_4 = {
+              services.lair-keystore-for-0_5 = {
                 enable = true;
                 id = "test";
                 package = holonix-0_5.packages.${system}.lair-keystore;
@@ -177,7 +191,34 @@
             }
             self.nixosModules.hcCommon
             self.nixosModules.conductor-0_5
-            self.nixosModules.lair-keystore-for-0_4
+            self.nixosModules.lair-keystore-for-0_5
+          ];
+          mkModules-0_6 = {system}: [
+            vmModule
+            {
+              environment.systemPackages = [
+                holonix-0_6.packages.${system}.lair-keystore
+                holonix-0_6.packages.${system}.holochain
+              ];
+
+              services.lair-keystore-for-0_6 = {
+                enable = true;
+                id = "test";
+                package = holonix-0_6.packages.${system}.lair-keystore;
+                passphrase = "password";
+              };
+
+              services.conductor-0_6 = {
+                enable = true;
+                id = "test";
+                lairId = "test";
+                package = holonix-0_6.packages.${system}.holochain;
+                keystorePassphrase = "password";
+              };
+            }
+            self.nixosModules.hcCommon
+            self.nixosModules.conductor-0_6
+            self.nixosModules.lair-keystore-for-0_6
           ];
         in {
           aarch64-darwin-test-0_3 = nixpkgs.lib.nixosSystem rec {
@@ -210,6 +251,16 @@
                 }
               ];
           };
+          aarch64-darwin-test-0_6 = nixpkgs.lib.nixosSystem rec {
+            system = "aarch64-linux";
+            modules =
+              mkModules-0_6 {inherit system;}
+              ++ [
+                {
+                  virtualisation.host.pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+                }
+              ];
+          };
           aarch64-linux-test-0_3 = nixpkgs.lib.nixosSystem rec {
             system = "aarch64-linux";
             modules = mkModules-0_3 {inherit system;};
@@ -222,6 +273,10 @@
             system = "aarch64-linux";
             modules = mkModules-0_5 {inherit system;};
           };
+          aarch64-linux-test-0_6 = nixpkgs.lib.nixosSystem rec {
+            system = "aarch64-linux";
+            modules = mkModules-0_6 {inherit system;};
+          };
           x86_64-linux-test-0_3 = nixpkgs.lib.nixosSystem rec {
             system = "x86_64-linux";
             modules = mkModules-0_4 {inherit system;};
@@ -233,6 +288,10 @@
           x86_64-linux-test-0_5 = nixpkgs.lib.nixosSystem rec {
             system = "x86_64-linux";
             modules = mkModules-0_5 {inherit system;};
+          };
+          x86_64-linux-test-0_6 = nixpkgs.lib.nixosSystem rec {
+            system = "x86_64-linux";
+            modules = mkModules-0_6 {inherit system;};
           };
         };
       };
@@ -253,6 +312,7 @@
         packages.vm-0_3 = self.nixosConfigurations."${system}-test-0_3".config.system.build.vm;
         packages.vm-0_4 = self.nixosConfigurations."${system}-test-0_4".config.system.build.vm;
         packages.vm-0_5 = self.nixosConfigurations."${system}-test-0_5".config.system.build.vm;
+        packages.vm-0_6 = self.nixosConfigurations."${system}-test-0_6".config.system.build.vm;
         packages.hc-ops = hc-ops.packages.${system}.hc-ops;
 
         devShells.default = pkgs.mkShell {
@@ -295,11 +355,19 @@
             inherit self system;
             holonix = holonix-0_5;
           });
+          holochain-0_6-with-lair = pkgs.testers.runNixOSTest (import ./tests/holochain-0_6-with-lair.nix {
+            inherit self system;
+            holonix = holonix-0_6;
+          });
+          holochain-0_6-with-in-proc-lair = pkgs.testers.runNixOSTest (import ./tests/holochain-0_6-with-in-proc-lair.nix {
+            inherit self system;
+            holonix = holonix-0_6;
+          });
           holochain-and-lair-side-by-side = pkgs.testers.runNixOSTest (import ./tests/holochain-and-lair-side-by-side.nix {
             inherit self system;
-            holonix-0_3 = holonix-0_3;
             holonix-0_4 = holonix-0_4;
             holonix-0_5 = holonix-0_5;
+            holonix-0_6 = holonix-0_6;
           });
         };
       };

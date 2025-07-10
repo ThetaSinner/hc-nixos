@@ -1,9 +1,9 @@
 {
   self,
   system,
-  holonix-0_3,
   holonix-0_4,
   holonix-0_5,
+  holonix-0_6,
   ...
 }: {
   name = "Holochain With Lair Side By Side";
@@ -16,39 +16,13 @@
     }: {
       imports = [
         self.outputs.nixosModules.hcCommon
-        self.outputs.nixosModules.lair-keystore-for-0_3
         self.outputs.nixosModules.lair-keystore-for-0_4
         self.outputs.nixosModules.lair-keystore-for-0_5
-        self.outputs.nixosModules.conductor-0_3
+        self.outputs.nixosModules.lair-keystore-for-0_6
         self.outputs.nixosModules.conductor-0_4
         self.outputs.nixosModules.conductor-0_5
+        self.outputs.nixosModules.conductor-0_6
       ];
-
-      services.lair-keystore-for-0_3 = {
-        enable = true;
-        id = "testA";
-        package = holonix-0_3.packages.${system}.lair-keystore;
-        passphrase = "passwordA";
-      };
-
-      services.conductor-0_3 = {
-        enable = true;
-        id = "testA";
-        lairId = "testA";
-        package = holonix-0_3.packages.${system}.holochain;
-        keystorePassphrase = "passwordA";
-        config = {
-          admin_interfaces = [
-            {
-              driver = {
-                type = "websocket";
-                port = 8001;
-                allowed_origins = "*";
-              };
-            }
-          ];
-        };
-      };
 
       services.lair-keystore-for-0_4 = {
         enable = true;
@@ -79,7 +53,7 @@
       services.lair-keystore-for-0_5 = {
         enable = true;
         id = "testC";
-        package = holonix-0_4.packages.${system}.lair-keystore;
+        package = holonix-0_5.packages.${system}.lair-keystore;
         passphrase = "passwordC";
       };
 
@@ -102,10 +76,36 @@
         };
       };
 
-      system.stateVersion = "24.11";
+      services.lair-keystore-for-0_6 = {
+        enable = true;
+        id = "testD";
+        package = holonix-0_6.packages.${system}.lair-keystore;
+        passphrase = "passwordD";
+      };
+
+      services.conductor-0_6 = {
+        enable = true;
+        id = "testD";
+        lairId = "testD";
+        package = holonix-0_6.packages.${system}.holochain;
+        keystorePassphrase = "passwordD";
+        config = {
+          admin_interfaces = [
+            {
+              driver = {
+                type = "websocket";
+                port = 8004;
+                allowed_origins = "*";
+              };
+            }
+          ];
+        };
+      };
+
+      system.stateVersion = "25.05";
     };
   };
 
   # https://nixos.org/manual/nixos/stable/index.html#ssec-machine-objects
-  testScript = builtins.readFile ./holochain-0_4-with-lair.py;
+  testScript = builtins.readFile ./holochain-and-lair-side-by-side.py;
 }
