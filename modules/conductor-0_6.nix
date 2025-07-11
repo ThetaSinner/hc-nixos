@@ -87,6 +87,9 @@ in {
           yq -y "(.keystore.connection_url) = \"$lair_connection_url\"" /etc/holochain-${cfg.id}/conductor.yaml > /var/lib/conductor-${cfg.id}/conductor.yaml
         ''
         else ''
+          if test -f "/var/lib/conductor-${cfg.id}/conductor.yaml"; then
+            chmod 0644 /var/lib/conductor-${cfg.id}/conductor.yaml
+          fi
           cp /etc/holochain-${cfg.id}/conductor.yaml /var/lib/conductor-${cfg.id}/conductor.yaml
         '';
 
