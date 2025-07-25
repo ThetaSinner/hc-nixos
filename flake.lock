@@ -396,11 +396,11 @@
         "rust-overlay": "rust-overlay_4"
       },
       "locked": {
-        "lastModified": 1753451023,
-        "narHash": "sha256-WN4C2ejhYYwf1s3nxhnoRzQE/BDOLJb2fE7iS45gpns=",
+        "lastModified": 1753462996,
+        "narHash": "sha256-ot95GOEgYgpig1eMaH87gL9uKOGkfX0vkqj3lZKDgQY=",
         "owner": "ThetaSinner",
         "repo": "hc-ops",
-        "rev": "0cf9288db574458b6feb0023c4a122643dc3c366",
+        "rev": "dfe88c32730c66adbe5b75a42b594764611df99b",
         "type": "github"
       },
       "original": {
