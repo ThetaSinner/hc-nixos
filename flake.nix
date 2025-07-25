@@ -35,8 +35,14 @@
       };
     };
 
-    hc-ops = {
-      url = "github:ThetaSinner/hc-ops";
+    # Works with Holochain 0.4
+    hc-ops-0_1 = {
+      url = "github:ThetaSinner/hc-ops?ref=release-0.1";
+    };
+
+    # Works with Holochain 0.5
+    hc-ops-0_2 = {
+      url  = "github:ThetaSinner/hc-ops?ref=main";
     };
   };
 
@@ -48,7 +54,8 @@
     holonix-0_4,
     holonix-0_5,
     holonix-0_6,
-    hc-ops,
+    hc-ops-0_1,
+    hc-ops-0_2,
     ...
   }:
     flake-parts.lib.mkFlake {inherit inputs;} ({withSystem, ...}: {
@@ -313,7 +320,10 @@
         packages.vm-0_4 = self.nixosConfigurations."${system}-test-0_4".config.system.build.vm;
         packages.vm-0_5 = self.nixosConfigurations."${system}-test-0_5".config.system.build.vm;
         packages.vm-0_6 = self.nixosConfigurations."${system}-test-0_6".config.system.build.vm;
-        packages.hc-ops = hc-ops.packages.${system}.hc-ops;
+        # Provided for compatibility with older versions
+        packages.hc-ops = hc-ops-0_1.packages.${system}.hc-ops;
+        packages.hc-ops-0_1 = hc-ops-0_1.packages.${system}.hc-ops;
+        packages.hc-ops-0_2 = hc-ops-0_2.packages.${system}.hc-ops;
 
         devShells.default = pkgs.mkShell {
           packages =
@@ -324,7 +334,7 @@
                 holochain
               ]
               ++ [
-                hc-ops.packages.${system}.hc-ops
+                hc-ops-0_2.packages.${system}.hc-ops
               ]);
         };
 
