@@ -365,11 +365,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1753288168,
-        "narHash": "sha256-EXf8uy4axB58Br9p4woVFe5U06JBzhy/OAzbPB24928=",
+        "lastModified": 1753451364,
+        "narHash": "sha256-M3oHVH4qiZ1JafCxEN21fGYf5P2hlvKYScyj6pqsd7c=",
         "owner": "ThetaSinner",
         "repo": "hc-ops",
-        "rev": "af58c0d7d04590d08cf7721143aa8929661d26d2",
+        "rev": "3463c3a722b215acbc78ee87f8c1ffb6235ed033",
         "type": "github"
       },
       "original": {
@@ -396,11 +396,11 @@
         "rust-overlay": "rust-overlay_4"
       },
       "locked": {
-        "lastModified": 1753445306,
-        "narHash": "sha256-UqBS66I1oZOxa6XnoCnOu8EkSyDmP4FMdevpz9vpjDs=",
+        "lastModified": 1753451023,
+        "narHash": "sha256-WN4C2ejhYYwf1s3nxhnoRzQE/BDOLJb2fE7iS45gpns=",
         "owner": "ThetaSinner",
         "repo": "hc-ops",
-        "rev": "2845ada82b7d9ccf762f7501d468b4f753f2c773",
+        "rev": "0cf9288db574458b6feb0023c4a122643dc3c366",
         "type": "github"
       },
       "original": {
