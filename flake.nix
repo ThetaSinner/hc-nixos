@@ -24,14 +24,14 @@
     holonix-0_5 = {
       url = "github:holochain/holonix?ref=main-0.5";
       inputs = {
-        holochain.url = "github:holochain/holochain?ref=holochain-0.5.4";
+        holochain.url = "github:holochain/holochain?ref=holochain-0.5.5-rc.0";
       };
     };
 
     holonix-0_6 = {
       url = "github:holochain/holonix?ref=main";
       inputs = {
-        holochain.url = "github:holochain/holochain?ref=holochain-0.6.0-dev.12";
+        holochain.url = "github:holochain/holochain?ref=holochain-0.6.0-dev.15";
       };
     };
 
@@ -42,7 +42,7 @@
 
     # Works with Holochain 0.5
     hc-ops-0_2 = {
-      url  = "github:ThetaSinner/hc-ops?ref=main";
+      url = "github:ThetaSinner/hc-ops?ref=main";
     };
   };
 
