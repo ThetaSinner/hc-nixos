@@ -74,7 +74,7 @@ in {
       restartIfChanged = true;
 
       environment = {
-        RUST_LOG = "info,wasmer_compiler_cranelift=warn";
+        RUST_LOG = "NETAUDIT=trace,info,wasmer_compiler_cranelift=warn,tx5=debug,tx5_core=debug,tx5_connection=debug,kitsune2_transport_tx5=debug";
         RUST_BACKTRACE = "1";
         # HOLOCHAIN_MIGRATE_UNENCRYPTED="true";
       };
