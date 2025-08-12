@@ -649,16 +649,16 @@
     "holochain_5": {
       "flake": false,
       "locked": {
-        "lastModified": 1754665479,
-        "narHash": "sha256-u4G2ZodzgtzblMW/nEqmtFnBpclr3TaV+moQFt0NPSc=",
+        "lastModified": 1755035005,
+        "narHash": "sha256-EXEpOU6FYuC/iFNOccHtWQhESuGi0UZGHSn47mdTDZU=",
         "owner": "holochain",
         "repo": "holochain",
-        "rev": "3705fd37b54b254bee4615739ea22c952d2fab57",
+        "rev": "735c98b3476e37f12e00e4270f48c2f575839178",
         "type": "github"
       },
       "original": {
         "owner": "holochain",
-        "ref": "holochain-0.5.5-rc.1",
+        "ref": "test-fix-combo",
         "repo": "holochain",
         "type": "github"
       }
@@ -1295,11 +1295,11 @@
     },
     "nixpkgs_9": {
       "locked": {
-        "lastModified": 1754767907,
-        "narHash": "sha256-8OnUzRQZkqtUol9vuUuQC30hzpMreKptNyET2T9lB6g=",
+        "lastModified": 1754937576,
+        "narHash": "sha256-3sWA5WJybUE16kIMZ3+uxcxKZY/JRR4DFBqLdSLBo7w=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "c5f08b62ed75415439d48152c2a784e36909b1bc",
+        "rev": "ddae11e58c0c345bf66efbddbf2192ed0e58f896",
         "type": "github"
       },
       "original": {

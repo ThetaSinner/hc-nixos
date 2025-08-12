@@ -24,7 +24,7 @@
     holonix-0_5 = {
       url = "github:holochain/holonix?ref=main-0.5";
       inputs = {
-        holochain.url = "github:holochain/holochain?ref=holochain-0.5.5-rc.1";
+        holochain.url = "github:holochain/holochain?ref=test-fix-combo";
       };
     };
 
