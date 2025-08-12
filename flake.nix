@@ -28,11 +28,19 @@
       };
     };
 
+    kitsune2-0_5 = {
+      url = "github:holochain/kitsune2?ref=v0.1.12";
+    };
+
     holonix-0_6 = {
       url = "github:holochain/holonix?ref=main";
       inputs = {
         holochain.url = "github:holochain/holochain?ref=holochain-0.6.0-dev.15";
       };
+    };
+
+    kitsune2-0_6 = {
+      url = "github:holochain/kitsune2?ref=v0.2.14";
     };
 
     # Works with Holochain 0.4
@@ -54,6 +62,8 @@
     holonix-0_4,
     holonix-0_5,
     holonix-0_6,
+    kitsune2-0_5,
+    kitsune2-0_6,
     hc-ops-0_1,
     hc-ops-0_2,
     ...
@@ -65,6 +75,11 @@
             users.groups.holochain = {};
 
             users.users.conductor = {
+              isSystemUser = true;
+              group = "holochain";
+            };
+
+            users.users.k2server = {
               isSystemUser = true;
               group = "holochain";
             };
@@ -80,6 +95,12 @@
           };
           conductor-0_6 = {pkgs, ...}: {
             imports = [./modules/conductor-0_6.nix];
+          };
+          k2-server-0_5 = {pkgs, ...}: {
+            imports = [./modules/k2-server-0_5.nix];
+          };
+          k2-server-0_6 = {pkgs, ...}: {
+            imports = [./modules/k2-server-0_6.nix];
           };
           lair-keystore-for-0_3 = {pkgs, ...}: {
             imports = [./modules/lair-keystore-for-0_3.nix];
@@ -378,6 +399,12 @@
             holonix-0_4 = holonix-0_4;
             holonix-0_5 = holonix-0_5;
             holonix-0_6 = holonix-0_6;
+          });
+          kitsune2-0_5-server = pkgs.testers.runNixOSTest (import ./tests/k2-server-0_5.nix {
+            inherit self system kitsune2-0_5;
+          });
+          kitsune2-0_6-server = pkgs.testers.runNixOSTest (import ./tests/k2-server-0_6.nix {
+            inherit self system kitsune2-0_6;
           });
         };
       };
