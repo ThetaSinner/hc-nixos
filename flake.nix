@@ -22,7 +22,7 @@
     };
 
     holonix-0_5 = {
-      url = "github:holochain/holonix?ref=main-0.5";
+      url = "github:holochain/holonix?ref=build-test-fix-combo";
       inputs = {
         holochain.url = "github:holochain/holochain?ref=test-fix-combo";
       };
