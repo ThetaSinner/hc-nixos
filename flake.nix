@@ -22,20 +22,20 @@
     };
 
     holonix-0_5 = {
-      url = "github:holochain/holonix?ref=build-test-fix-combo";
+      url = "github:holochain/holonix?ref=main-0.5";
       inputs = {
-        holochain.url = "github:holochain/holochain?ref=test-fix-combo";
+        holochain.url = "github:holochain/holochain?ref=holochain-0.5.5-rc.2";
       };
     };
 
     kitsune2-0_5 = {
-      url = "github:holochain/kitsune2?ref=v0.1.12";
+      url = "github:holochain/kitsune2?ref=v0.1.14";
     };
 
     holonix-0_6 = {
       url = "github:holochain/holonix?ref=main";
       inputs = {
-        holochain.url = "github:holochain/holochain?ref=holochain-0.6.0-dev.15";
+        holochain.url = "github:holochain/holochain?ref=holochain-0.6.0-dev.17";
       };
     };
 
