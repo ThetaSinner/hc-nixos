@@ -24,23 +24,23 @@
     holonix-0_5 = {
       url = "github:holochain/holonix?ref=main-0.5";
       inputs = {
-        holochain.url = "github:holochain/holochain?ref=holochain-0.5.5-rc.3";
+        holochain.url = "github:holochain/holochain?ref=holochain-0.5.5";
       };
     };
 
     kitsune2-0_5 = {
-      url = "github:holochain/kitsune2?ref=v0.1.14";
+      url = "github:holochain/kitsune2?ref=v0.1.15";
     };
 
     holonix-0_6 = {
       url = "github:holochain/holonix?ref=main";
       inputs = {
-        holochain.url = "github:holochain/holochain?ref=holochain-0.6.0-dev.17";
+        holochain.url = "github:holochain/holochain?ref=holochain-0.6.0-dev.18";
       };
     };
 
     kitsune2-0_6 = {
-      url = "github:holochain/kitsune2?ref=v0.2.14";
+      url = "github:holochain/kitsune2?ref=v0.2.16";
     };
 
     # Works with Holochain 0.4
